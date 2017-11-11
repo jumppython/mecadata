@@ -8,7 +8,7 @@ class AreaInitialSpider(scrapy.Spider):
 		urls = ['https://www.mercari.com/jp/area/']
 		for url in urls:
 			request = scrapy.Request(url=url, callback=self.parse)
-			request.meta['proxy'] = "114.174.205.245:3128"
+			#request.meta['proxy'] = "114.174.205.245:3128"
 			yield request
 
 	def parse(self, response):
