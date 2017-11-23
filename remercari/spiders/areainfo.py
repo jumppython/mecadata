@@ -11,10 +11,10 @@ class AreaInfoSpider(scrapy.Spider):
 
 	def __init__(self, *args, **kwargs):
 		super(AreaInfoSpider, self).__init__(*args, **kwargs)
-		self.conn = sql.connect('area.db')
+		self.conn = sql.connect('dataset/area.db')
 		self.c = self.conn.cursor()
-		self.proxy_pool = ['202.9.104.10:80', \
-		                   '110.77.232.210:8080']
+		#self.proxy_pool = ['202.9.104.10:80', \
+		#                   '110.77.232.210:8080']
 
 	def start_requests(self):
 		self.c.execute('DROP TABLE IF EXISTS areainfos')

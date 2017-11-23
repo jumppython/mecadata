@@ -11,7 +11,7 @@ class ItemInfoSpider(scrapy.Spider):
 
 	def __init__(self, *args, **kwargs):
 		super(ItemInfoSpider, self).__init__(*args, **kwargs)
-		self.conn = sql.connect('item.db')
+		self.conn = sql.connect('dataset/item.db')
 		self.c = self.conn.cursor()
 		self.proxy_pool = ['202.9.104.10:80', \
 		                   '110.77.232.210:8080']
@@ -20,7 +20,7 @@ class ItemInfoSpider(scrapy.Spider):
 		self.c.execute('DROP TABLE IF EXISTS iteminfos')
 		self.c.execute('CREATE TABLE IF NOT EXISTS iteminfos (item_id, item_main_type, item_mid_type, item_sub_type, item_price, area_id)')
 		self.conn.commit()
-		temp_conn = sql.connect('area.db')
+		temp_conn = sql.connect('dataset/area.db')
 		temp_c = temp_conn.cursor()
 		temp_c.execute('DELETE FROM areainfos WHERE rowid NOT IN (SELECT min(rowid) FROM areainfos GROUP BY item_id,item_url,area_id)')
 		item_list = [row for row in temp_c.execute('SELECT * FROM areainfos ORDER BY area_id')]

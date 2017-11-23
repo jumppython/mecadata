@@ -16,7 +16,7 @@ class AreaInitialSpider(scrapy.Spider):
 		area_names = response.xpath('//a[starts-with(@href, "/jp/area/")]/text()').extract()
 		# Create areas Table to save couple of areanames and areaurls
 		# Create a connection to database file
-		conn = sql.connect('area.db')
+		conn = sql.connect('dataset/area.db')
 		c = conn.cursor()
 		# Create Table
 		c.execute('CREATE TABLE areas (area_id,area_name, area_url)')

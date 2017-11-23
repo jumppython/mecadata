@@ -9,6 +9,10 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
+import pkgutil
+
+data = pkgutil.get_data("remercari", "dataset/area.db")
+
 BOT_NAME = 'remercari'
 
 SPIDER_MODULES = ['remercari.spiders']
@@ -52,11 +56,11 @@ DOWNLOAD_DELAY = 3
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-DOWNLOADER_MIDDLEWARES = {
+#DOWNLOADER_MIDDLEWARES = {
 #    'remercari.middlewares.MyCustomDownloaderMiddleware': 543,
 #    'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware':110,
-    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware':110,
-}
+#    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware':110,
+#}
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
