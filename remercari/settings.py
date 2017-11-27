@@ -11,7 +11,7 @@
 
 import pkgutil
 
-data = pkgutil.get_data("remercari", "dataset/area.db")
+data = pkgutil.get_data("remercari", "dataset/area.csv")
 
 BOT_NAME = 'remercari'
 
