@@ -26,7 +26,7 @@ class AreaInitialSpider(scrapy.Spider):
 			import csv
 			conn = open('area.csv','w')
 		
-		saveto(conn, area_urls, area_names)
+		self.saveto(conn, area_urls, area_names)
 
 	def saveto(self, conn, **items):
 		area_urls = items['area_urls']
