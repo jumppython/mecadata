@@ -9,9 +9,9 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-import pkgutil
+#import pkgutil
 
-data = pkgutil.get_data("remercari", "dataset/area.csv")
+#data = pkgutil.get_data("remercari", "dataset/area.csv")
 
 BOT_NAME = 'remercari'
 
