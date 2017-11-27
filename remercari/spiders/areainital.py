@@ -46,8 +46,8 @@ class AreaInitialSpider(scrapy.Spider):
 			c = csv.writer(conn)
 			# Insert lots of area records
 			records = [(int(area_urls[i].split('/')[3]), \
-				       area_names[i].decode('utf-8'), \
-				       area_urls[i].decode('utf-8')) for i in range(len(area_urls))]
+				       area_names[i].encode('utf-8'), \
+				       area_urls[i].encode('utf-8')) for i in range(len(area_urls))]
 			c.writerows(records)
 			conn.close()
 
