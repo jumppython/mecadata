@@ -31,7 +31,7 @@ class AreaInitialSpider(scrapy.Spider):
 	def saveto(self, conn, **items):
 		area_urls = items['area_urls']
 		area_names = items['area_names']
-		if type(conn) == sqlite3.Connection:
+		if type(conn) == sql.Connection:
 			c = conn.cursor()
 			# Create Table
 			c.execute('CREATE TABLE areas (area_id,area_name, area_url)')
