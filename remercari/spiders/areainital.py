@@ -15,13 +15,13 @@ class AreaInitialSpider(scrapy.Spider):
 		area_urls = response.xpath('//a[starts-with(@href, "/jp/area/")]/@href').extract()
 		area_names = response.xpath('//a[starts-with(@href, "/jp/area/")]/text()').extract()
 		
-		if savetowhere == 'db':
+		if self.savetowhere == 'db':
 			# Create areas Table to save couple of areanames and areaurls
 			# Create a connection to database file
 			import sqlite3 as sql
 			conn = sql.connect('dataset/area.db')
 
-		if savetowhere == 'csv':
+		if self.savetowhere == 'csv':
 			# Create areas File to save couple of areanames and areaurls
 			import csv
 			conn = open('dataset/area.csv','w')
