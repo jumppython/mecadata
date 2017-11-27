@@ -1,4 +1,6 @@
 import scrapy
+import sqlite3 as sql
+import csv
 
 class AreaInitialSpider(scrapy.Spider):
 	name =  "areainitial"
@@ -18,12 +20,10 @@ class AreaInitialSpider(scrapy.Spider):
 		if self.savetowhere == 'db':
 			# Create areas Table to save couple of areanames and areaurls
 			# Create a connection to database file
-			import sqlite3 as sql
 			conn = sql.connect('area.db')
 
 		if self.savetowhere == 'csv':
 			# Create areas File to save couple of areanames and areaurls
-			import csv
 			conn = open('area.csv','w')
 		
 		self.saveto(conn, area_urls=area_urls, area_names=area_names)
