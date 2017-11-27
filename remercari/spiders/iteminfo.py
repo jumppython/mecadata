@@ -13,8 +13,8 @@ class ItemInfoSpider(scrapy.Spider):
 		super(ItemInfoSpider, self).__init__(*args, **kwargs)
 		self.conn = sql.connect('dataset/item.db')
 		self.c = self.conn.cursor()
-		self.proxy_pool = ['202.9.104.10:80', \
-		                   '110.77.232.210:8080']
+		#self.proxy_pool = ['202.9.104.10:80', \
+		#                   '110.77.232.210:8080']
 
 	def start_requests(self):
 		self.c.execute('DROP TABLE IF EXISTS iteminfos')
