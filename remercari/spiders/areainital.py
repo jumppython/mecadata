@@ -19,12 +19,12 @@ class AreaInitialSpider(scrapy.Spider):
 			# Create areas Table to save couple of areanames and areaurls
 			# Create a connection to database file
 			import sqlite3 as sql
-			conn = sql.connect('dataset/area.db')
+			conn = sql.connect('area.db')
 
 		if self.savetowhere == 'csv':
 			# Create areas File to save couple of areanames and areaurls
 			import csv
-			conn = open('dataset/area.csv','w')
+			conn = open('area.csv','w')
 		
 		saveto(conn, area_urls, area_names)
 
