@@ -8,7 +8,6 @@
 import scrapy
 
 class AreaList(scrapy.Item):
-	area_id = scrapy.Field()
 	area_name = scrapy.Field()
 	area_url = scrapy.Field()
 

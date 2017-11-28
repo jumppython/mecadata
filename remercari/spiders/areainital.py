@@ -16,7 +16,7 @@ class AreaInitialSpider(scrapy.Spider):
 
 	def parse(self, response):
 		l = ItemLoader(item=AreaList(), response=response)
-		l.add_xpath('area_urls', '//a[starts-with(@href, "/jp/area/")]/@href')
-		l.add_xpath('area_names', '//a[starts-with(@href, "/jp/area/")]/text()')
+		l.add_xpath('area_url', '//a[starts-with(@href, "/jp/area/")]/@href')
+		l.add_xpath('area_name', '//a[starts-with(@href, "/jp/area/")]/text()')
 
 		return l.load_item()
