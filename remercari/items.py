@@ -7,8 +7,21 @@
 
 import scrapy
 
+class AreaList(scrapy.Item):
+	area_id = scrapy.Field()
+	area_name = scrapy.Field()
+	area_url = scrapy.Field()
 
-class RemercariItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class ItemList(scrapy.Item):
+	item_id = scrapy.Field()
+	item_url = scrapy.Field()
+	area_id = scrapy.Field()
+
+class ItemInfo(scrapy.Item):
+	item_id = scrapy.Field()
+	main_type = scrapy.Field()
+	mid_type = scrapy.Field()
+	sub_type = scrapy.Field()
+	price_text = scrapy.Field()
+	price = scrapy.Field()
+	area_id = scrapy.Field()
