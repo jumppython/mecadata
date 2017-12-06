@@ -12,9 +12,9 @@ class AreaList(scrapy.Item):
 	area_url = scrapy.Field()
 
 class ItemList(scrapy.Item):
-	item_id = scrapy.Field()
+	item_id = scrapy.Field(serializer=str)
 	item_url = scrapy.Field()
-	area_id = scrapy.Field()
+	#area_id = scrapy.Field(serializer=str)
 
 class ItemInfo(scrapy.Item):
 	item_id = scrapy.Field()
