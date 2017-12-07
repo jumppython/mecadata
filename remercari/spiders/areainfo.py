@@ -11,7 +11,8 @@ class AreaInfoSpider(scrapy.Spider):
 
 	def start_requests(self):
 		client = ScrapinghubClient('ec16b94bcf024d0bb502684368658d59')
-		mystore = client.collections.get_store('area_init')
+		myprojet = client.projects.get('254951')
+		mystore = myproject.collections.get_store('area_init')
 
 		#self.c.execute('DROP TABLE IF EXISTS areainfos')
 		#self.c.execute('CREATE TABLE IF NOT EXISTS areainfos (item_id, item_url, area_id)')
