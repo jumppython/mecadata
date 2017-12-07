@@ -3,6 +3,7 @@
 import scrapy
 import sqlite3 as sql
 import random
+from scrapy.loader import ItemLoader
 from scrapinghub import ScrapinghubClient
 from remercari.items import ItemList
 
