@@ -10,7 +10,7 @@ class AreaInfoSpider(scrapy.Spider):
 	name = "areainfo"
 
 	def start_requests(self):
-		client = ScrapinghubClient('ec16b94bcf024d0bb502684368658d59')
+		client = SrapinghubClient('ec16b94bcf024d0bb502684368658d59')
 		mystore = client.collections.get_store('area_init')
 
 		#self.c.execute('DROP TABLE IF EXISTS areainfos')
