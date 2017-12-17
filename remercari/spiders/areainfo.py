@@ -24,12 +24,14 @@ class AreaInfoSpider(scrapy.Spider):
 				yield request
 
 	def parse(self, response):
+		area_id = response.meta['area_id']
 		l = ItemLoader(item=ItemList(), response=response)
 		l.add_xpath('item_url', '//a[starts-with(@href,"https://item.mercari.com/jp/")]/@href')
 		item_urls = response.xpath('//a[starts-with(@href,"https://item.mercari.com/jp/")]/@href').extract()
 		item_ids = [_.split('/')[4].encode() for _ in item_urls]
 		for _ in item_ids:
 			l.add_value('item_id', _)
+		l.add_value('area_id',area_id)
 
 		return l.load_item()
 		

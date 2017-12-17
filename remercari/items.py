@@ -14,7 +14,7 @@ class AreaList(scrapy.Item):
 class ItemList(scrapy.Item):
 	item_id = scrapy.Field(serializer=str)
 	item_url = scrapy.Field()
-	#area_id = scrapy.Field(serializer=str)
+	area_id = scrapy.Field(serializer=str)
 
 class ItemInfo(scrapy.Item):
 	item_id = scrapy.Field()
