@@ -14,6 +14,7 @@ def restore(job_id):
  	else:
  		myjob_id = id
  	myjob = myproject.jobs.get('%s/%s/%d' % (PROJECTID,SPIDERID,myjob_id))
+ 	mycollection = myproject.collections.get_store('area_info')
  	
 
 
