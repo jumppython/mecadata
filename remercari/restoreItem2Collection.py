@@ -14,8 +14,18 @@ def restore(job_id):
  	else:
  		myjob_id = id
  	myjob = myproject.jobs.get('%s/%s/%d' % (PROJECTID,SPIDERID,myjob_id))
+ 	myitem = [_ for _ in myjob.items.iter()]
+ 	area_ids = [_['area_id'] for _ in myitem]
+ 	item_ids = [_['item_id'] for _ in myitem]
+ 	item_urls = [_['item_url'] for _ in myitem]
  	mycollection = myproject.collections.get_store('area_info')
- 	
+ 	item_num = len(myitem)
+ 	for item_i in range(item_num):
+ 		area_info_item = dict()
+ 		area_info_item['area_id'] = area_ids[item_i]
+ 		area_info_item['item_id'] = item_ids[item_i]
+ 		area_info_item['item_url'] = item_urls[item_i]
+ 		mycollection.set({'_key': str(item_i), 'value':area_info_item})
 
 
 if __name__ == "__main__":
