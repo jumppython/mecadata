@@ -18,11 +18,11 @@ class AreaInfoSpider(scrapy.Spider):
 		for item in mystore.iter():
 			elem = item['value']
 			area = [_ for _ in elem['area_url']
-			for url in area:
+			for url_i in area:
 				for page in range(1,3):
-					url = 'https://www.mercari.com'+url+'?page=%d' % page
+					url = 'https://www.mercari.com'+url_i+'?page=%d' % page
 					request = scrapy.Request(url=url,callback=self.parse)
-					request.meta['area_id'] = url.split('/')[3]
+					request.meta['area_id'] = url_i.split('/')[3]
 					yield request
 
 	def parse(self, response):
