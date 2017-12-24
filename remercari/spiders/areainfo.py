@@ -16,12 +16,14 @@ class AreaInfoSpider(scrapy.Spider):
 		mystore = myproject.collections.get_store('area_init')
 
 		for item in mystore.iter():
-			area = item['value']
-			for page in range(1,3):
-				url = 'https://www.mercari.com'+area[1]+'?page=%d' % page
-				request = scrapy.Request(url=url,callback=self.parse)
-				request.meta['area_id'] = area[1].split('/')[3]
-				yield request
+			elem = item['value']
+			area = [_ for _ in elem['area_url']
+			for url in area:
+				for page in range(1,3):
+					url = 'https://www.mercari.com'+url+'?page=%d' % page
+					request = scrapy.Request(url=url,callback=self.parse)
+					request.meta['area_id'] = url.split('/')[3]
+					yield request
 
 	def parse(self, response):
 		area_id = response.meta['area_id']
