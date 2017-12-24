@@ -17,7 +17,7 @@ class AreaInfoSpider(scrapy.Spider):
 
 		for item in mystore.iter():
 			elem = item['value']
-			area = [_ for _ in elem['area_url']
+			area = [_ for _ in elem['area_url']]
 			for url_i in area:
 				for page in range(1,3):
 					url = 'https://www.mercari.com'+url_i+'?page=%d' % page
