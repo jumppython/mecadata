@@ -17,7 +17,7 @@ class AreaInfoSpider(scrapy.Spider):
 
 		for item in mystore.iter():
 			area = item['value']
-			for page in range(1,11):
+			for page in range(1,3):
 				url = 'https://www.mercari.com'+area[1]+'?page=%d' % page
 				request = scrapy.Request(url=url,callback=self.parse)
 				request.meta['area_id'] = area[1].split('/')[3]
