@@ -14,7 +14,7 @@ def restore(spider_id, job_id=0, store_name='', *keys):
  		#job_ids = [int(_.split('/')[2]) if (_.split('/')[0]==myproject.key and _.split('/')[1]==SPIDERID) else '' for _ in job_keys]
  		#myjob_id = sorted(job_ids)[-1]
  	else:
- 		myjob_id = id
+ 		myjob_id = job_id
  	myjob = myproject.jobs.get('%s/%s/%d' % (PROJECTID,SPIDERID,myjob_id))
  	myitem = [_ for _ in myjob.items.iter()]
  	item_num = len(myitem)
@@ -24,15 +24,22 @@ def restore(spider_id, job_id=0, store_name='', *keys):
  	#area_ids = [_['area_id'] for _ in myitem]
  	#item_ids = [_['item_id'] for _ in myitem]
  	#item_urls = [_['item_url'] for _ in myitem]
- 	mycollection = myproject.collections.get_store(store_name)
- 	for item_i in range(item_num):
- 		area_info_item = dict()
- 		for key_i in keys:
-	 		area_info_item[key_i] = item_container[key_i][item_i]
- 		#area_info_item['area_id'] = area_ids[item_i]
- 		#area_info_item['item_id'] = item_ids[item_i]
- 		#area_info_item['item_url'] = item_urls[item_i]
- 		mycollection.set({'_key': str(item_i), 'value':area_info_item})
+ 	store_names = [_['name'] for _ in myproject.collections.iter()]
+ 	if store_name in store_names:
+	 	mycollection = myproject.collections.get_store(store_name)
+	 	if mycollection.count()>0:
+	 		for _ in mycollection.iter():
+	 			mycollection.delete(_['_key'])
+	 	for item_i in range(item_num):
+	 		area_info_item = dict()
+	 		for key_i in keys:
+		 		area_info_item[key_i] = item_container[key_i][item_i]
+	 		#area_info_item['area_id'] = area_ids[item_i]
+	 		#area_info_item['item_id'] = item_ids[item_i]
+	 		#area_info_item['item_url'] = item_urls[item_i]
+	 		mycollection.set({'_key': str(item_i), 'value':area_info_item})
+	else:
+		print "the collection %s you want to access is not exist." % store_name
 
 def obtainLatestJobIDofSpider(apikey, project_id, spider_id):
  	client = ScrapinghubClient(apikey)
