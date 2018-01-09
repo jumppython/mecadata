@@ -25,11 +25,18 @@ def restore(spider_id,job_id=0, *colname):
 
 	time_stamp = dt.now().strftime('%Y%m%d%H%M')
 	with codecs.open(os.path.join(os.path.expanduser('~'),'Scrapy','mecadata_iteminfos',time_stamp+'_iteminfo.csv'),'w','utf-8') as f:
+		title = ""
+		for n in colname:
+			title += '"' + n + '"'
+			title += ','
+		f.write(title)
+		f.write('\n')
 		for rownum in range(item_num):
 			rowcontext = ""
 			for n in colname:
 				item_context = item_container[n][rownum][0]
 				item_context = str(item_context) if type(item_context)==int else item_context
+				item_context = '"' + item_context + '"'
 				rowcontext += item_context
 				rowcontext += ','
 			f.write(rowcontext)
@@ -46,4 +53,4 @@ if __name__ == "__main__":
 		print "SPIDER: %d - JOB: %d" % (spider_id, job_id)
 		print "KEYS:"
 		print sys.argv[4:]
-		restore(spider_id, job_id, *sys.argv[4:])
+		restore(spider_id, job_id, *sys.argv[3:])
