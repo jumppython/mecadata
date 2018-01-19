@@ -26,8 +26,7 @@ class ItemInfo(scrapy.Item):
 	area_id = scrapy.Field()
 	user_url = scrapy.Field()
 	user_name = scrapy.Field()
-	item_state_container = scrapy.Field()
+	item_state = scrapy.Field()
 	delivery_charge_burden = scrapy.Field()
 	delivery_method = scrapy.Field()
 	shipment_date_criterion = scrapy.Field()
-	
