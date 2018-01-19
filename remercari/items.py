@@ -24,3 +24,10 @@ class ItemInfo(scrapy.Item):
 	price_text = scrapy.Field()
 	price = scrapy.Field()
 	area_id = scrapy.Field()
+	user_url = scrapy.Field()
+	user_name = scrapy.Field()
+	item_state_container = scrapy.Field()
+	delivery_charge_burden = scrapy.Field()
+	delivery_method = scrapy.Field()
+	shipment_date_criterion = scrapy.Field()
+	
