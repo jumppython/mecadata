@@ -32,5 +32,5 @@ while job.metadata.get('state')!='finished':
 print "spider iteminfo finished."
 
 spider_id = int(spider.key.split('/')[1])
-ri2l.restore(spider_id, 0, 'area_id','item_id','main_type','mid_type','sub_type','price','price_text','user_url','user_nane','item_state','delivery_charge_burden','delivery_method','shipment_date_criterion')
+ri2l.restore(spider_id, 0, 'area_id','item_id','main_type','mid_type','sub_type','price','price_text','user_url','user_name','item_state','delivery_charge_burden','delivery_method','shipment_date_criterion')
 print "item has been restore from spider [iteminfo] to local folder [mecadata_iteminfos]."
