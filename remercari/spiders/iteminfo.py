@@ -9,6 +9,7 @@ from remercari.items import ItemInfo
 
 class ItemInfoSpider(scrapy.Spider):
 	name = "iteminfo"
+	download_delay = 0.6
 	#global conn
 	#global c
 	#conn = sql.connect('item.db')
