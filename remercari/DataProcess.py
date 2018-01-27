@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-import warnings
+import glob
 import os
 from datetime import datetime
 
@@ -14,9 +14,12 @@ class DataFile:
 	def __init__(self, filepath, extension=None):
 		self.__filepath = filepath
 		self.__extension = extension
-		self.__allfiles = [f for f in os.listdir(self.__filepath) if os.path.isfile(os.path.join(self.__filepath, f))]
 		if extension is not None:
-			self.__allfiles = [f for f in os.listdir(self.__filepath) if f.endswith(extension)]
+			self.__allfiles = filter(os.path.isfile, glob.glob(filepath+'/*'+extension))
+			self.__allfilenames = [os.path.basename(f) for f in self.__allfiles]
+		else:
+			self.__allfiles = filter(os.path.isfile, glob.glob(filepath+'/*'))
+			self.__allfilenames = [os.path.basename(f) for f in self.__allfiles]
 
 	def filepath(self):
 		return self.__filepath
@@ -24,24 +27,39 @@ class DataFile:
 	def extension(self):
 		return self.__extension
 
+	def allfiles(self):
+		return self.__allfiles
+
 	def changeFilepath(self, filepath):
 		return DataFile(filepath)
 
 	def changeExtension(self, extension):
 		return DataFile(self.__filepath, extension)
 
-	def filterFiles(self, prefix=None, suffix=None, extension=None):
-		if extension is None:
-			extension = self.__extension
+	# Filter files by prefix and suffix in folder except subfolder.
+	# Designation sort, and by 'name', 'size' or 'date'
+	def filterFiles(self, prefix='', suffix='', numlimit=1, ascending=True, bywhat='name'):
+		if not bywhat in ['name','size','time']:
+			raise ValueError("bywhat must be choosed only from 'name', 'size' and 'date'.")
 
-		filenames = [f[:-len(extension)] for f in self.__allfiles]
-		filteredfilenames = filterFilenameBySuffix(filterFilenameByPrefix(filenames, prefix), suffix)
+		purefilenames = [os.path.splitext(f)[0] for f in self.__allfilenames]
+		filtered_purefilenames = filterFilenameBySuffix(filterFilenameByPrefix(purefilenames, prefix), suffix)
+		if bywhat == 'name':
+			filtered_purefilenames.sort() 
+		filtered_filenames = [f+self.__extension for f in filtered_purefilenames]
+		filtered_files = [os.path.join(self.__filepath,f) for f in filtered_filenames]
 
-		return filteredfilenames
+		if bywhat == 'name':
+			sorted_files = filtered_files
+		if bywhat == 'size':
+			sorted_files = sorted(filtered_files, key=lambda x: os.path.getsize(x))
+		if bywhat == 'date':
+			sorted_files = sorted(filtered_files, key=lambda x: os.path.getmtime(x))
+		if not ascending:
+			sorted_files = sorted_files[::-1]
+		limited_files = sorted_files[:numlimit]
 
-	def searchNFiles(pattern, N, ascending=True, **attribute):
-
-
+		return limited_files
 
 def filterFilenameByPrefix(filelist, prefix):
 	if not isinstance(filelist, list):
@@ -56,3 +74,7 @@ def filterFilenameBySuffix(filelist, suffix):
 	if not isinstance(suffix, str):
 		raise TypeError("suffix must be a str")
 	return [f for f in filelist if f.endswith(suffix)]
+
+if __name__ == '__main__':
+	df = DataFile(os.path.join(os.path.expanduser('~'),"Scrapy","mecadata"),'.py')
+	print df.filterFiles(numlimit=5,bywhat='name')
