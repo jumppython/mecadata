@@ -9,7 +9,7 @@ from remercari.items import ItemList
 
 class AreaInfoSpider(scrapy.Spider):
 	name = "areainfo"
-	download_delay = 5.0
+	#download_delay = 5.0
 
 	def start_requests(self):
 		client = ScrapinghubClient('ec16b94bcf024d0bb502684368658d59')
