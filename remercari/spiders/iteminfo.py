@@ -49,7 +49,7 @@ class ItemInfoSpider(scrapy.Spider):
 				#request = scrapy.Request(url=url,callback=self.parse)
 				#request.meta['item_id'] = item[0]
 				#request.meta['area_id'] = item[2]
-				request = scrapy.Request(url=item_urls[i],callback=self.parse,errback=error_handler)
+				request = scrapy.Request(url=item_urls[i],callback=self.parse,errback=self.error_handler)
 				request.meta['item_id'] = item_ids[i]
 				request.meta['area_id'] = area_id
 				yield request

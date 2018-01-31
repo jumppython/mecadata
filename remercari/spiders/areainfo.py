@@ -23,7 +23,7 @@ class AreaInfoSpider(scrapy.Spider):
 			for url_i in area:
 				for page in range(1,3):
 					url = 'https://www.mercari.com'+url_i+'?page=%d' % page
-					request = scrapy.Request(url=url,callback=self.parse,errback=error_handler)
+					request = scrapy.Request(url=url,callback=self.parse,errback=self.error_handler)
 					request.meta['area_id'] = url_i.split('/')[3]
 					yield request
 
