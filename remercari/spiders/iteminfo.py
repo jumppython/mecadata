@@ -44,8 +44,8 @@ class ItemInfoSpider(scrapy.Spider):
 			item_ids = log_item['value']['item_id']
 			item_urls = log_item['value']['item_url']
 			for i in range(len(item_ids)):
-				if i % 30 == 0:
-					sleep(1)
+				if i % 10 == 0:
+					sleep(0.8)
 				#request = scrapy.Request(url=url,callback=self.parse)
 				#request.meta['item_id'] = item[0]
 				#request.meta['area_id'] = item[2]
@@ -115,4 +115,4 @@ class ItemInfoSpider(scrapy.Spider):
 			return l.load_item()
 
 	def error_handler(self, failure):
-		sleep(30)
+		sleep(10)
