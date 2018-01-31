@@ -6,6 +6,7 @@ import random
 from scrapy.loader import ItemLoader
 from scrapinghub import ScrapinghubClient
 from remercari.items import ItemInfo
+from time import sleep
 
 class ItemInfoSpider(scrapy.Spider):
 	name = "iteminfo"
@@ -43,10 +44,12 @@ class ItemInfoSpider(scrapy.Spider):
 			item_ids = log_item['value']['item_id']
 			item_urls = log_item['value']['item_url']
 			for i in range(len(item_ids)):
+				if i % 30 == 0:
+					sleep(1)
 				#request = scrapy.Request(url=url,callback=self.parse)
 				#request.meta['item_id'] = item[0]
 				#request.meta['area_id'] = item[2]
-				request = scrapy.Request(url=item_urls[i],callback=self.parse)
+				request = scrapy.Request(url=item_urls[i],callback=self.parse,errback=error_handler)
 				request.meta['item_id'] = item_ids[i]
 				request.meta['area_id'] = area_id
 				yield request
@@ -110,3 +113,6 @@ class ItemInfoSpider(scrapy.Spider):
 			l.add_value('shipment_date_criterion',shipment_date_criterion_text)
 
 			return l.load_item()
+
+	def error_handler(self, failure):
+		sleep(30)

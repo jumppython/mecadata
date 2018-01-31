@@ -39,7 +39,7 @@ class DataFile:
 	# Filter files by prefix and suffix in folder except subfolder.
 	# Designation sort, and by 'name', 'size' or 'date'
 	def filterFiles(self, prefix='', suffix='', numlimit=1, ascending=True, bywhat='name'):
-		if not bywhat in ['name','size','time']:
+		if not bywhat in ['name','size','date']:
 			raise ValueError("bywhat must be choosed only from 'name', 'size' and 'date'.")
 
 		purefilenames = [os.path.splitext(f)[0] for f in self.__allfilenames]
@@ -76,5 +76,6 @@ def filterFilenameBySuffix(filelist, suffix):
 	return [f for f in filelist if f.endswith(suffix)]
 
 if __name__ == '__main__':
-	df = DataFile(os.path.join(os.path.expanduser('~'),"Scrapy","mecadata"),'.py')
-	print df.filterFiles(numlimit=5,bywhat='name')
+	df = DataFile(os.path.join(os.path.expanduser('~'),"Scrapy","mecadata_iteminfos"),'.csv')
+	filelist = df.filterFiles(numlimit=8,bywhat='date',ascending=False)
+	print filelist

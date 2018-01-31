@@ -6,6 +6,7 @@ import random
 from scrapy.loader import ItemLoader
 from scrapinghub import ScrapinghubClient
 from remercari.items import ItemList
+from time import sleep
 
 class AreaInfoSpider(scrapy.Spider):
 	name = "areainfo"
@@ -22,7 +23,7 @@ class AreaInfoSpider(scrapy.Spider):
 			for url_i in area:
 				for page in range(1,3):
 					url = 'https://www.mercari.com'+url_i+'?page=%d' % page
-					request = scrapy.Request(url=url,callback=self.parse)
+					request = scrapy.Request(url=url,callback=self.parse,errback=error_handler)
 					request.meta['area_id'] = url_i.split('/')[3]
 					yield request
 
@@ -38,4 +39,5 @@ class AreaInfoSpider(scrapy.Spider):
 
 		return l.load_item()
 		
-		
+	def error_handler(self, failure):
+		sleep(30)
