@@ -1,6 +1,8 @@
 #-*- coding: utf-8 -*-
 import glob
 import os
+import pandas as pd
+import numpy as np
 from datetime import datetime
 
 class DataFile:
@@ -38,7 +40,7 @@ class DataFile:
 
 	# Filter files by prefix and suffix in folder except subfolder.
 	# Designation sort, and by 'name', 'size' or 'date'
-	def filterFiles(self, prefix='', suffix='', numlimit=1, ascending=True, bywhat='name'):
+	def filterFiles(self, prefix='', suffix='', numlimit=-1, ascending=True, bywhat='name'):
 		if not bywhat in ['name','size','date']:
 			raise ValueError("bywhat must be choosed only from 'name', 'size' and 'date'.")
 
@@ -51,13 +53,18 @@ class DataFile:
 
 		if bywhat == 'name':
 			sorted_files = filtered_files
+			attr_list = filtered_purefilenames
 		if bywhat == 'size':
 			sorted_files = sorted(filtered_files, key=lambda x: os.path.getsize(x))
+			attr_list = map(os.path.getsize, sorted_files)
 		if bywhat == 'date':
 			sorted_files = sorted(filtered_files, key=lambda x: os.path.getmtime(x))
+			attr_list = map(os.path.getmtime, sorted_files)
 		if not ascending:
 			sorted_files = sorted_files[::-1]
-		limited_files = sorted_files[:numlimit]
+			attr_list = attr_list[::-1]
+		conn_files_attrs = zip(sorted_files, attr_list)
+		limited_files = conn_files_attrs[:numlimit]
 
 		return limited_files
 
@@ -77,5 +84,10 @@ def filterFilenameBySuffix(filelist, suffix):
 
 if __name__ == '__main__':
 	df = DataFile(os.path.join(os.path.expanduser('~'),"Scrapy","mecadata_iteminfos"),'.csv')
-	filelist = df.filterFiles(numlimit=8,bywhat='date',ascending=False)
-	print filelist
+	filelist_bydate = df.filterFiles(numlimit=8,bywhat='date',ascending=False)
+	base_df = pd.read_csv(filelist_bydate[0][0],names=['item_id','price']).sort_values(['item_id'])
+	for index, f in enumerate(filelist_bydate[1:-1]):
+		df = pd.read_csv(f[0],names=['item_id','price'])
+		df_temp = df.loc[df['item_id'].isin(base_df['item_id'])].sort_values(['item_id'])
+		df_new = pd.concat([base_df,pd.DataFrame([_[1]['price'] if _[1]['item_id'] in base_df['item_id'] else 0 for _ in df_temp.iterrows()])])
+	df_new.to_json(os.path.join(os.path.expanduser('~'),"Scrapy","test.json"),orient='records')
